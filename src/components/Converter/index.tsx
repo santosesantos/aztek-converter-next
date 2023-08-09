@@ -1,133 +1,133 @@
-// import React, { useState } from 'react';
-// import * as C from "./styles";
+"use client";
 
-// const Converter = () => {
-//   const [currencyA, setCurrencyA] = useState("USD");
-//   const [valueCurrencyA, setValueCurrencyA] = useState('');
-//   const [currencyB, setCurrencyB] = useState("BRL");
-//   const [valueCurrencyB, setValueCurrencyB] = useState(0);
-//   const [currencySymbol, setCurrencySymbol] = useState('R$');
+import React, { useState } from 'react';
+import Select, { SingleValue } from "react-select";
+import * as C from "./styles";
 
-//   const convert = async () => {
-//     if (valueCurrencyA !== 0 && valueCurrencyA !== '' && valueCurrencyA > 0) {
-//       const url = `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.REACT_APP_FREE_CURRENCY_KEY}&base_currency=${currencyA}&currencies=${currencyB}`;
-//       await fetch(url)
-//         .then(res => {
-//           return res.json();
-//         })
-//         .then(jsonResponse => {
-//           let price = jsonResponse.data[currencyB];
-//           setValueCurrencyB((parseFloat(valueCurrencyA) * price).toFixed(2));
-//         });
-//     }
-//   }
+interface IProps {
+  children?: React.ReactNode;
+}
 
-//   const verifyZero = txt => {
-//     if (txt.startsWith('0')) {
-//       return verifyZero(txt.slice(1));
-//     }
+export default function Converter(props: IProps) {
+  const options = [
+    {value: "USD;$", label: "USD"},
+    {value: "BRL;R$", label: "BRL"},
+    {value: "AUD;$", label: "AUD"},
+    {value: "BGN;Лв", label: "BGN"},
+    {value: "CAD;$", label: "CAD"},
+    {value: "CHF;₣", label: "CHF"},
+    {value: "CNY;¥", label: "CNY"},
+    {value: "CZK;Kč", label: "CZK"},
+    {value: "DKK;kr.", label: "DKK"},
+    {value: "EUR;€", label: "EUR"},
+    {value: "GBP;£", label: "GBP"},
+    {value: "HKD;HK$", label: "HKD"},
+    {value: "HUF;Ft", label: "HUF"},
+    {value: "IDR;Rp", label: "IDR"},
+    {value: "ILS;₪", label: "ILS"},
+    {value: "INR;₹", label: "INR"},
+    {value: "ISK;kr", label: "ISK"},
+    {value: "JPY;¥", label: "JPY"},
+    {value: "KRW;₩", label: "KRW"},
+    {value: "MXN;$", label: "MXN"},
+    {value: "MYR;RM", label: "MYR"},
+    {value: "NOK;kr", label: "NOK"},
+    {value: "NZD;$", label: "NZD"},
+    {value: "PHP;₱", label: "PHP"},
+    {value: "PLN;zł", label: "PLN"},
+    {value: "RON;lei", label: "RON"},
+    {value: "RUB;₽", label: "RUB"},
+    {value: "SEK;kr", label: "SEK"},
+    {value: "SGD;$", label: "SGD"},
+    {value: "THB;฿", label: "THB"},
+    {value: "TRY;TL", label: "TRY"},
+    {value: "ZAR;R", label: "ZAR"},
+  ]
 
-//     return txt;
-//   }
+  const [currencyA, setCurrencyA] = useState("USD");
+  const [valueCurrencyA, setValueCurrencyA] = useState<number>();
 
-//   const updateField = evt => {
-//     const txt = verifyZero(evt.target.value);
-//     (txt.length <= 14) && (txt >= 0) && setValueCurrencyA(txt);
-//   }
+  const [currencyB, setCurrencyB] = useState("BRL");
+  const [valueCurrencyB, setValueCurrencyB] = useState<string>("");
+  const [currencySymbol, setCurrencySymbol] = useState('R$');
 
-//   const updateCurrency = (evt) => {
-//     if (evt.target.name === "currencyA") {
-//       setCurrencyA(evt.target.value);
-//       return;
-//     }
-//     if (evt.target.name === "currencyB") {
-//       const currency = evt.target.value.split(';');
-//       setCurrencyB(currency[0]);
-//       setCurrencySymbol(currency[1] || '$');
-//       return;
-//     }
-//   }
+  const [isDisabled, setIsDisabled] = useState(true);
 
-//   return (
-//     <C.ConverterContainer>
-//       <C.Title>
-//         <h2>
-//           <C.CurrencySelector name="currencyA" onChange={evt => updateCurrency(evt)}>
-//             <option value="USD">USD</option>
-//             <option value="BRL">BRL</option>
-//             <option value="AUD">AUD</option>
-//             <option value="BGN">BGN</option>
-//             <option value="CAD">CAD</option>
-//             <option value="CHF">CHF</option>
-//             <option value="CNY">CNY</option>
-//             <option value="CZK">CZK</option>
-//             <option value="DKK">DKK</option>
-//             <option value="EUR">EUR</option>
-//             <option value="GBP">GBP</option>
-//             <option value="HKD">HKD</option>
-//             <option value="HUF">HUF</option>
-//             <option value="IDR">IDR</option>
-//             <option value="ILS">ILS</option>
-//             <option value="INR">INR</option>
-//             <option value="ISK">ISK</option>
-//             <option value="JPY">JPY</option>
-//             <option value="KRW">KRW</option>
-//             <option value="MXN">MXN</option>
-//             <option value="MYR">MYR</option>
-//             <option value="NOK">NOK</option>
-//             <option value="NZD">NZD</option>
-//             <option value="PHP">PHP</option>
-//             <option value="PLN">PLN</option>
-//             <option value="RON">RON</option>
-//             <option value="RUB">RUB</option>
-//             <option value="SEK">SEK</option>
-//             <option value="SGD">SGD</option>
-//             <option value="THB">THB</option>
-//             <option value="TRY">TRY</option>
-//             <option value="ZAR">ZAR</option>
-//           </C.CurrencySelector> &rArr; <C.CurrencySelector name="currencyB" onChange={evt => updateCurrency(evt)}>
-//             <option value="BRL;R$">BRL</option>
-//             <option value="USD;$">USD</option>
-//             <option value="AUD;$">AUD</option>
-//             <option value="BGN;Лв">BGN</option>
-//             <option value="CAD;$">CAD</option>
-//             <option value="CHF;₣">CHF</option>
-//             <option value="CNY;¥">CNY</option>
-//             <option value="CZK;Kč">CZK</option>
-//             <option value="DKK;kr.">DKK</option>
-//             <option value="EUR;€">EUR</option>
-//             <option value="GBP;£">GBP</option>
-//             <option value="HKD;HK$">HKD</option>
-//             <option value="HUF;Ft">HUF</option>
-//             <option value="IDR;Rp">IDR</option>
-//             <option value="ILS;₪">ILS</option>
-//             <option value="INR;₹">INR</option>
-//             <option value="ISK;kr">ISK</option>
-//             <option value="JPY;¥">JPY</option>
-//             <option value="KRW;₩">KRW</option>
-//             <option value="MXN;$">MXN</option>
-//             <option value="MYR;RM">MYR</option>
-//             <option value="NOK;kr">NOK</option>
-//             <option value="NZD;$">NZD</option>
-//             <option value="PHP;₱">PHP</option>
-//             <option value="PLN;zł">PLN</option>
-//             <option value="RON;lei">RON</option>
-//             <option value="RUB;₽">RUB</option>
-//             <option value="SEK;kr">SEK</option>
-//             <option value="SGD;$">SGD</option>
-//             <option value="THB;฿">THB</option>
-//             <option value="TRY;TL">TRY</option>
-//             <option value="ZAR;R">ZAR</option>
-//           </C.CurrencySelector>
-//         </h2>
-//       </C.Title>
-//       <form action="javascript:void(0)">
-//         <C.Input type="number" value={valueCurrencyA} placeholder="Enter value..." onChange={evt => updateField(evt)} autoFocus required />
-//         <C.BtnConvert type="submit" onClick={convert}>Convert</C.BtnConvert>
-//       </form>
-//       <C.ValueConverted>{currencySymbol} {valueCurrencyB}</C.ValueConverted>
-//     </C.ConverterContainer>
-//   );
-// }
+  async function convert() {
+    if (valueCurrencyA && valueCurrencyA !== 0 && valueCurrencyA > 0) {
+      const url = `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.FREE_CURRENCY_KEY}&base_currency=${currencyA}&currencies=${currencyB}`;
+      await fetch(url)
+        .then(res => {
+          return res.json();
+        })
+        .then(jsonResponse => {
+          let price = jsonResponse.data[currencyB];
+          setValueCurrencyB((valueCurrencyA * price).toFixed(2));
+        })
+        .catch(exception => {
+          console.log(exception);
+          window.alert("An error has occurred. Please, try again.");
+        });
+    } else {
+      window.alert("Please, enter a value!");
+    }
+  }
 
-// export default Converter;
+  function verifyZero(txt: string) {
+    if (txt.startsWith('0')) {
+      return verifyZero(txt.slice(1));
+    }
+    return txt;
+  }
+
+  function updateField(evt: React.ChangeEvent<HTMLInputElement>) {
+    const txt = verifyZero(evt.target.value);
+
+    if (txt.length <= 14) {
+      const value = parseInt(txt);
+      setValueCurrencyA(value);
+      setIsDisabled(false);
+
+      if (!txt.length)
+        setIsDisabled(true);
+    }
+  }
+
+  function updateCurrency(evt: SingleValue<{ value: string; label: string}>, name: string) {
+    if (!evt)
+      return;
+
+    setValueCurrencyB("");
+    if (name === "currencyA") {
+      const currency = evt.value.split(';');
+      setCurrencyA(currency[0]);
+      return;
+    }
+
+    if (name === "currencyB") {
+      const currency = evt.value.split(';');
+      setCurrencyB(currency[0]);
+      setCurrencySymbol(currency[1] || '$');
+      return;
+    }
+  }
+
+  return (
+    <C.ConverterContainer>
+      <C.Title>
+        <Select options={options} 
+          defaultValue={{value: currencyA + ";$", label: currencyA}} 
+          onChange={evt => updateCurrency(evt, "currencyA")}
+        />
+        <C.ArrowIcon />
+        <Select options={options} 
+          defaultValue={{value: currencyB + ";R$", label: currencyB}} 
+          onChange={evt => updateCurrency(evt, "currencyB")}
+        />
+      </C.Title>
+      <C.Input type="number" inputMode="numeric" value={valueCurrencyA} placeholder="Enter value..." onChange={updateField} autoFocus />
+      <C.BtnConvert disabled={isDisabled} onClick={convert}>Convert</C.BtnConvert>
+      <C.ValueConverted>{currencySymbol} {valueCurrencyB}</C.ValueConverted>
+    </C.ConverterContainer>
+  );
+}

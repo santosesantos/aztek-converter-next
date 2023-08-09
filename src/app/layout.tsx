@@ -2,6 +2,7 @@ import Footer from '@/components/Footer';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Roboto_Slab } from 'next/font/google';
+import StyledComponentsRegistry from '@/lib/registry';
 
 const roboto_slab = Roboto_Slab({ weight: ["300", "400", "600"], subsets: ['latin'] });
 
@@ -16,14 +17,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="en">
       <body className={roboto_slab.className}>
-        <main>
-          {children}
-        </main>
-        <footer>
-          <Footer />
-        </footer>
+        <StyledComponentsRegistry>
+          <main>
+            {children}
+          </main>
+          <footer>
+            <Footer />
+          </footer>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
