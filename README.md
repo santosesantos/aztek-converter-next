@@ -26,3 +26,7 @@ A simple and straight forward currency converter. This project was meant to prac
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
 - [Styled Components](https://styled-components.com/) - For styles
+
+### Useful resources
+
+- [React-select](https://github.com/JedWatson/react-select)
