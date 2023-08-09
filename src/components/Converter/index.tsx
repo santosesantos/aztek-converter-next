@@ -55,7 +55,7 @@ export default function Converter(props: IProps) {
 
   async function convert() {
     if (valueCurrencyA && valueCurrencyA !== 0 && valueCurrencyA > 0) {
-      const url = `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.FREE_CURRENCY_KEY}&base_currency=${currencyA}&currencies=${currencyB}`;
+      const url = `https://aztek-backend.vercel.app/api?currencyA=${currencyA}&currencyB=${currencyB}`;
       await fetch(url)
         .then(res => {
           return res.json();
