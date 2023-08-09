@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import BeatLoader from 'react-spinners/BeatLoader';
 import Select, { SingleValue } from "react-select";
 import * as C from "./styles";
 
@@ -52,9 +53,11 @@ export default function Converter(props: IProps) {
   const [currencySymbol, setCurrencySymbol] = useState('R$');
 
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function convert() {
     if (valueCurrencyA && valueCurrencyA !== 0 && valueCurrencyA > 0) {
+      setIsLoading(true);
       const url = `https://aztek-backend.vercel.app/api?currencyA=${currencyA}&currencyB=${currencyB}`;
       await fetch(url)
         .then(res => {
@@ -63,6 +66,7 @@ export default function Converter(props: IProps) {
         .then(jsonResponse => {
           let price = jsonResponse.data[currencyB];
           setValueCurrencyB((valueCurrencyA * price).toFixed(2));
+          setIsLoading(false);
         })
         .catch(exception => {
           console.log(exception);
@@ -98,6 +102,7 @@ export default function Converter(props: IProps) {
       return;
 
     setValueCurrencyB("");
+    setIsLoading(true);
     if (name === "currencyA") {
       const currency = evt.value.split(';');
       setCurrencyA(currency[0]);
@@ -127,7 +132,7 @@ export default function Converter(props: IProps) {
       </C.Title>
       <C.Input type="number" inputMode="numeric" value={valueCurrencyA} placeholder="Enter value..." onChange={updateField} autoFocus />
       <C.BtnConvert disabled={isDisabled} onClick={convert}>Convert</C.BtnConvert>
-      <C.ValueConverted>{currencySymbol} {valueCurrencyB}</C.ValueConverted>
+      <C.ValueConverted>{isLoading ? <BeatLoader color="#35794B" /> : (currencySymbol + " " + valueCurrencyB)}</C.ValueConverted>
     </C.ConverterContainer>
   );
 }
