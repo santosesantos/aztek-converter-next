@@ -9,7 +9,7 @@ export default function Footer(props: IProps) {
   return (
     <C.Footer>
       <p>
-        Coded by <a href="https://github.com/santosesantos" target="_blank">Santos e Santos</a>.
+        Coded by <a href="https://santosesantos.github.io/my-website/" target="_blank">Santos e Santos</a>.
       </p>
     </C.Footer>
   );
